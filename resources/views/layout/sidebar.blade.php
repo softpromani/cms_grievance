@@ -61,20 +61,27 @@
                     <span class="menu-title text-truncate" data-i18n="Home">Dashboard</span>
                 </a>
             </li>
+            @hasanyrole('super_admin|user')
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="shield"></i><span
                         class="menu-title text-truncate" data-i18n="Roles &amp; Permission">Roles &amp;
                         Permission</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="app-access-roles.html"><i
+
+                    <li><a class="d-flex align-items-center" href="{{ route('admin.role') }}"><i
                                 data-feather="circle"></i><span class="menu-item text-truncate"
                                 data-i18n="Roles">Roles</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="app-access-permission.html"><i
+                    <li><a class="d-flex align-items-center" href="{{ route('admin.permission.index') }}"><i
                                 data-feather="circle"></i><span class="menu-item text-truncate"
                                 data-i18n="Permission">Permission</span></a>
                     </li>
+                    <li><a class="d-flex align-items-center" href="{{ route('admin.rolePermission') }}"><i
+                        data-feather="circle"></i><span class="menu-item text-truncate"
+                        data-i18n="RoleHas/Permission">RoleHas/Permission</span></a>
+            </li>
                 </ul>
             </li>
+            @endhasanyrole
         </ul>
     </div>
 </div>
