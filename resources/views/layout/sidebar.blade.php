@@ -81,6 +81,10 @@
             </li>
                 </ul>
             </li>
+            <li><a class="d-flex align-items-center" href="{{ route('admin.subject.index') }}">
+                <i class="fa fa-book" aria-hidden="true"></i><span class="menu-item text-truncate"
+                data-i18n="Add Subject">Add Subject</span></a>
+            </li>
             @endhasanyrole
         </ul>
     </div>

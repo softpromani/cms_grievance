@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\GrievanceSubjectController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use Illuminate\Support\Facades\Artisan;
@@ -20,9 +21,6 @@ use App\Http\Controllers\FrontendController;
 Route::get('/', function () {
     return view('login');
 });
-// Route::get('/admin', function () {
-//     return view('welcome');
-// })->name('admin.dashboard');
 Route::get('test', function () {
     return view('email_send_otp');
 });
@@ -34,9 +32,10 @@ Route::prefix('user-login')->as('user-login.')->group(function () {
 Route::post('/login',[AdminController::class,'AdminLogin'])->name('admin_login');
 Route::post('register',[AdminController::class,'Register'])->name('register');
 Route::get('get-register',[AdminController::class,'getRegister'])->name('registeration');
-Route::get('/admin', function () {
-    return view('welcome');
-})->name('admin.dashboard');
+// Route::get('/admin', function () {
+//     return view('welcome');
+// })->name('admin.dashboard');
+
 Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],function(){
 Route::get('dashboard',[AdminController::class,'dashboard'])->name('dashboard');
 Route::get('logout',[AdminController::class,'Logout'])->name('logout');
@@ -47,6 +46,8 @@ Route::resource('permission',PermissionController::class);
 Route::get('/role-has-permission',[PermissionController::class,'rolePermission'])->name('rolePermission');
 Route::post('/fetch-permission',[PermissionController::class,'fetchPermission'])->name('fetchPermission');
 Route::post('/assign-permission',[PermissionController::class,'assignPermission'])->name('assignPermission');
+Route::resource('subject',GrievanceSubjectController::class);
+Route::get('changeStatus/{id}',[GrievanceSubjectController::class,'is_activeSubject']);
 });
 
 
