@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('grievance_users', function (Blueprint $table) {
             $table->id();
-            $table->string('unicode');
+            $table->string('user_type');
+            $table->string('unicode')->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('gender');

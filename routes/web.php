@@ -20,9 +20,7 @@ use App\Http\Controllers\FrontendController;
 Route::get('/', function () {
     return view('login');
 });
-// Route::get('/admin', function () {
-//     return view('welcome');
-// })->name('admin.dashboard');
+
 Route::get('test', function () {
     return view('email_send_otp');
 });
@@ -30,13 +28,17 @@ Route::prefix('user-login')->as('user-login.')->group(function () {
     Route::post('email-send-otp',[FrontendController::class,'email_verify'])->name('emailverify'); 
     Route::post('verify-otp',[FrontendController::class,'otp_verify'])->name('emailotpverify');
     Route::get('grievance-user-register',[FrontendController::class,'grievance_user_register'])->name('grievanceuser');
+    Route::post('grievance-user-register',[FrontendController::class,'submit_user_grievance'])->name('postusergrievance');
+    Route::get('dashboard',[FrontendController::class,'dashboard'])->name('dashboard');
+    Route::get('raise-grievance',[FrontendController::class,'grievance_raise'])->name('grievanceraise');
+    Route::post('raise-grievance',[FrontendController::class,'raise_grievance'])->name('raisegrievance');
 });
 Route::post('/login',[AdminController::class,'AdminLogin'])->name('admin_login');
 Route::post('register',[AdminController::class,'Register'])->name('register');
 Route::get('get-register',[AdminController::class,'getRegister'])->name('registeration');
-Route::get('/admin', function () {
-    return view('welcome');
-})->name('admin.dashboard');
+// Route::get('/admin', function () {
+//     return view('welcome');
+// })->name('admin.dashboard');
 Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],function(){
 Route::get('dashboard',[AdminController::class,'dashboard'])->name('dashboard');
 Route::get('logout',[AdminController::class,'Logout'])->name('logout');

@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'grievance' => [
+            'driver' => 'session',
+            'provider' => 'grievance_users',
+        ],
     ],
 
     /*
@@ -63,6 +67,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'grievance_users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\GrievanceUser::class,
         ],
 
         // 'users' => [

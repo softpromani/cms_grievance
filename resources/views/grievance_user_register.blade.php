@@ -3,7 +3,6 @@
 
 </style>
 @section('content')
-
                 <!-- Basic multiple Column Form section start -->
                 <section id="multiple-column-form">
                     <div class="row">
@@ -12,19 +11,37 @@
                                 <div class="card-header">
                                     <h4 class="card-title">Grievance User Register</h4>
                                 </div>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <div class="card-body">
-                                    <form class="form">
+                                    <form class="form" action="{{route('user-login.postusergrievance')}}" method="post">
+                                        @csrf
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-6">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Adsmn./Reg./Roll<sup style="color:red;font-size:15px">*</sup></label>
+                                                    <label class="form-label" for="first-name-column">Select User Type<sup style="color:red;font-size:15px">*</sup></label>
                                                     {{-- <input type="text" id="first-name-column" class="form-control" placeholder="First Name" name="fname-column" /> --}}
-                                                    <select name="cars" class="form-control" id="cars">
-                                                        <option value="">Adsmn./Reg./Roll</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="mercedes">Mercedes</option>
-                                                        <option value="audi">Audi</option>
+                                                    <select name="user_type" class="form-control" id="user_type">
+                                                        <option value="">user type</option>
+                                                        @foreach ($user_type as $type )
+                                                            <option value="{{$type->name}}">{{$type->name}}</option>
+                                                        @endforeach
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="mb-1">
+                                                    <label class="form-label unicode" for="first-name-column">Adsmn./Reg./Roll<sup style="color:red;font-size:15px">*</sup></label>
+                                                    <input type="text" id="unicode" class="form-control" placeholder="" name="unicode" />
+                                                  
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
@@ -42,8 +59,9 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label" for="last-name-column">Gender<sup style="color:red;font-size:15px">*</sup></label><br/>
-                                                    <input type="radio" id="last-name-column"  name="gender" />Male
-                                                    <input type="radio"  name="gender" /> Female
+                                                    <input type="radio" id="last-name-column" value="male" name="gender" />Male
+                                                    <input type="radio"   value="female" name="gender" /> Female
+                                                    <input type="radio"   value="other" name="gender" /> Other
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
@@ -63,31 +81,31 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label" for="country-floating">Password<sup style="color:red;font-size:15px">*</sup></label>
-                                                    <input type="text" id="country-floating" class="form-control" name="password" placeholder="password" />
+                                                    <input type="password" id="country-floating" class="form-control" name="password" placeholder="password" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label" for="company-column">Confirm Password<sup style="color:red;font-size:15px">*</sup></label>
-                                                    <input type="text" id="company-column" class="form-control" name="confirm_password" placeholder="Confirm Password" />
+                                                    <input type="password" id="company-column" class="form-control" name="confirm_password" placeholder="Confirm Password" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label" for="email-id-column">Course<sup style="color:red;font-size:15px">*</sup></label>
-                                                    <input type="email" id="email-id-column" class="form-control" name="course" placeholder="Course" />
+                                                    <input type="text" id="email-id-column" class="form-control" name="course" placeholder="Course" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label" for="email-id-column">Year/Semester</label>
-                                                    <input type="email" id="email-id-column" class="form-control" name="year_semester" placeholder="Year/Semester" />
+                                                    <input type="text" id="email-id-column" class="form-control" name="year_semester" placeholder="Year/Semester" />
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label" for="email-id-column">Course Complete Date</label>
-                                                    <input type="date" id="email-id-column" class="form-control" name="email-id-column" placeholder="Course Complete Date" />
+                                                    <input type="date" id="email-id-column" class="form-control" name="course_complete_date" placeholder="Course Complete Date" />
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -108,25 +126,22 @@
 <script>
     $(document).ready(function() {
       // alert("gjhhj");
-        $("#submitBtn").click(function() {
-            var formData = $("#EmailVerify").serialize();
-            var Url = "{{ route('user-login.emailverify') }}";
-            $.ajax({
-                url: Url,
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    // Handle success, e.g., show a success message
-                    console.log(response);
-                    $('.otp').html(response.data);
-                    $('.email').hide();
-                    // $('.email').prop('disabled', true);
-                },
-                error: function(error) {
-                    // Handle errors, e.g., display validation errors
-                    console.log(error.responseJSON);
+      $('#user_type').on('change', function() {
+                // Get the current value of the input field
+                var inputValue = $(this).val();
+                if(inputValue=="student"){
+                    $('.unicode').text('Addmission No.');
                 }
+                else if(inputValue=="teacher" || inputValue=="non-teacher" ){
+                    $('.unicode').text('Employee No.');
+
+                }
+                else if(inputValue=="parent"){
+                    $('.unicode').text('Registration No.');
+
+                }
+                // Display the value in the output paragraph
+                // $('.unicode').text('You typed: ' + inputValue);
             });
-        });
     });
 </script>

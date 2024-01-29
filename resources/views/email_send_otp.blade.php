@@ -61,6 +61,9 @@
                 url: Url,
                 type: 'POST',
                 data: formData,
+                beforeSend: function() {
+                  $('#submitBtn').prop('disabled', true);
+                },
                 success: function(response) {
                     // Handle success, e.g., show a success message
                     console.log(response);
