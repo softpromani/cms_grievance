@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AssignSubjectController;
 use App\Http\Controllers\Admin\GrievanceSubjectController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
@@ -48,6 +50,9 @@ Route::post('/fetch-permission',[PermissionController::class,'fetchPermission'])
 Route::post('/assign-permission',[PermissionController::class,'assignPermission'])->name('assignPermission');
 Route::resource('subject',GrievanceSubjectController::class);
 Route::get('changeStatus/{id}',[GrievanceSubjectController::class,'is_activeSubject']);
+Route::resource('user',UserController::class);
+Route::resource('assign',AssignSubjectController::class);
+Route::post('assign-user',[AssignSubjectController::class,'assignUser'])->name('assignUser');
 });
 
 

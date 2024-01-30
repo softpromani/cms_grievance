@@ -85,6 +85,39 @@
                 <i class="fa fa-book" aria-hidden="true"></i><span class="menu-item text-truncate"
                 data-i18n="Add Subject">Add Subject</span></a>
             </li>
+
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span
+                class="menu-title text-truncate" data-i18n="Users">Users</span></a>
+                <ul class="menu-content">
+
+            <li><a class="d-flex align-items-center" href="{{ route('admin.user.index') }}"><i
+                        data-feather="circle"></i><span class="menu-item text-truncate"
+                        data-i18n="All User">All User</span></a>
+            </li>
+            
+        </ul>
+    </li>
+
+    <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-comments"></i><span
+        class="menu-title text-truncate" data-i18n="Grievance">Grievance</span></a>
+        <ul class="menu-content">
+
+    <li><a class="d-flex align-items-center" href="#"><i
+                data-feather="circle"></i><span class="menu-item text-truncate"
+                data-i18n="New Grievance">New Grievance</span></a>
+    </li>
+    <li><a class="d-flex align-items-center" href="#"><i
+        data-feather="circle"></i><span class="menu-item text-truncate"
+        data-i18n="Pending Grievance">Pending Grievance</span></a>
+</li>
+<li><a class="d-flex align-items-center" href="#"><i
+    data-feather="circle"></i><span class="menu-item text-truncate"
+    data-i18n="Close Grievance">Close Grievance</span></a>
+</li>
+    
+</ul>
+</li>
+
             @endhasanyrole
         </ul>
     </div>
