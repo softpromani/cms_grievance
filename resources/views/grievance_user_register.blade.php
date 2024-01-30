@@ -32,7 +32,7 @@
                                                     <select name="user_type" class="form-control" id="user_type">
                                                         <option value="">user type</option>
                                                         @foreach ($user_type as $type )
-                                                            <option value="{{$type->name}}">{{$type->name}}</option>
+                                                            <option value="{{$type->id}}">{{$type->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
