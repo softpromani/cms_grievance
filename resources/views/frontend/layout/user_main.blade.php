@@ -8,7 +8,6 @@ Like: www.facebook.com/pixinvents
 Purchase: https://1.envato.market/vuexy_admin
 Renew Support: https://1.envato.market/vuexy_admin
 License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
-
 -->
 <html class="horizontal-layout horizontal-menu  navbar-floating footer-static  " data-open="hover" data-menu="horizontal-menu" data-col="">
 <!-- BEGIN: Head-->
@@ -25,8 +24,10 @@ License: You must have a valid license purchased only from themeforest(the above
     data-menu="horizontal-menu" data-col="">
 
     <!-- BEGIN: Header-->
-    @include('frontend.layout.header')
+    @include('frontend.layout.user_header')
     <!-- END: Header-->
+    @include('frontend.layout.user_menu')
+
     <!-- Content -->
     <div class="app-content content ">
         <div class="content-overlay"></div>

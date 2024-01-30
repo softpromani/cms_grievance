@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,9 +12,16 @@ class UserTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        \App\Models\UserType::create([
-            'name' => 'student',
-        ]);
+        $users = [
+            ['name' => 'student'],
+            ['name' => 'parent'],
+            ['name' => 'teacher'],
+            ['name' => 'non-teacher'],
+            // Add more products as needed
+        ];
+        DB::table('user_types')->insert($users);
+        // \App\Models\UserType::create([
+        //     'name' => 'student',
+        // ]);
     }
 }
