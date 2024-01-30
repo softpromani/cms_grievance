@@ -148,7 +148,6 @@ class FrontendController extends Controller
     $raise_data=RaiseGrievance::create([
       'subject'=>$request->subject,
       'complain'=>$request->title,
-      'subject'=>$request->message,
       'complain_number'=>$complain_number,
       'message'=>$request->message,
       'status_raise'=>'raise',

@@ -173,7 +173,7 @@
                        aria-expanded="false">
                        <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">John Doe</span><span
                                class="user-status">Admin</span></div><span class="avatar"><img class="round"
-                               src="{{ asgin mainset('app-assets//images/portrait/small/avatar-s-11.jpg')}}" alt="avatar"
+                               src="{{ asset('app-assets//images/portrait/small/avatar-s-11.jpg')}}" alt="avatar"
                                height="40" width="40"><span class="avatar-status-online"></span></span>
                    </a>
                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user"><a
