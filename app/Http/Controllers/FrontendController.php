@@ -145,10 +145,13 @@ class FrontendController extends Controller
     ]);
      $count=RaiseGrievance::whereYear('created_at',Carbon::now()->format('Y'))->count()+1;
     $complain_number= Carbon::now()->format('Ym') .'0000'.$count;
+
+  
     $raise_data=RaiseGrievance::create([
-      'subject'=>$request->subject,
-      'complain'=>$request->title,
-      'complain_number'=>$complain_number,
+      'subject_id'=>$request->subject,
+      'title'=>$request->title,
+      'user_id'=> Auth::guard('grievance')->user()->id,
+      'grievance_code'=>$complain_number,
       'message'=>$request->message,
       'status_raise'=>'raise',
     ]);
@@ -156,7 +159,8 @@ class FrontendController extends Controller
       $path='grievance';
       $media=uploadFile($raise_data,$path,$request->raise_file);
     }
-    if(isset($raise_data)){
+    
+    if(isset($media)){
       Session::flash('sucess','Grievance Raise Sucessfully');
       return redirect()->back();
     }else{

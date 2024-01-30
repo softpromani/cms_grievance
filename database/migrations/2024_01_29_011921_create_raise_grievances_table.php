@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('raise_grievances', function (Blueprint $table) {
             $table->id();
-            $table->string('subject');
-            $table->string('complain');
-            $table->string('complain_number');
+            $table->string('subject_id');
+            $table->string('title');
+            $table->string('user_id');
+            $table->string('grievance_code')->unique();
             $table->string('message');
             $table->string('status_raise');
             $table->timestamps();
