@@ -12,4 +12,12 @@ class RaiseGrievance extends Model
     public function media(){
         return $this->morphMany(Media::class,'mediable');
     }
+    public function subject()
+    {
+        return $this->belongsTo(GrievanceSubject::class);
+    }
+    public function grivuser()
+    {
+        return $this->belongsTo(GrievanceUser::class,'user_id');
+    }
 }

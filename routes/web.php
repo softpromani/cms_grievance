@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AssignSubjectController;
+use App\Http\Controllers\Admin\GrievanceController;
 use App\Http\Controllers\Admin\GrievanceSubjectController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
@@ -38,9 +39,7 @@ Route::prefix('user-login')->as('user-login.')->group(function () {
 Route::post('/login',[AdminController::class,'AdminLogin'])->name('admin_login');
 Route::post('register',[AdminController::class,'Register'])->name('register');
 Route::get('get-register',[AdminController::class,'getRegister'])->name('registeration');
-// Route::get('/admin', function () {
-//     return view('welcome');
-// })->name('admin.dashboard');
+
 Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],function(){
     Route::get('dashboard',[AdminController::class,'dashboard'])->name('dashboard');
     Route::get('logout',[AdminController::class,'Logout'])->name('logout');
@@ -48,14 +47,17 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],function
     Route::post('role-store',[RoleController::class,'store'])->name('role_store');
     Route::resource('permission',PermissionController::class);
 
-    Route::get('/role-has-permission',[PermissionController::class,'rolePermission'])->name('rolePermission');
-    Route::post('/fetch-permission',[PermissionController::class,'fetchPermission'])->name('fetchPermission');
-    Route::post('/assign-permission',[PermissionController::class,'assignPermission'])->name('assignPermission');
+    Route::get('role-has-permission',[PermissionController::class,'rolePermission'])->name('rolePermission');
+    Route::post('fetch-permission',[PermissionController::class,'fetchPermission'])->name('fetchPermission');
+    Route::post('assign-permission',[PermissionController::class,'assignPermission'])->name('assignPermission');
+
     Route::resource('subject',GrievanceSubjectController::class);
     Route::get('changeStatus/{id}',[GrievanceSubjectController::class,'is_activeSubject']);
     Route::resource('user',UserController::class);
     Route::resource('assign',AssignSubjectController::class);
     Route::post('assign-user',[AssignSubjectController::class,'assignUser'])->name('assignUser');
+    Route::get('new-grievance',[GrievanceController::class,'newGrievance'])->name('newgrievance');
+    Route::post('action/{id}',[GrievanceController::class,'takeAction'])->name('takeaction');
 });
 
 

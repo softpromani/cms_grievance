@@ -61,7 +61,7 @@
                     <span class="menu-title text-truncate" data-i18n="Home">Dashboard</span>
                 </a>
             </li>
-            @hasanyrole('super_admin|user')
+            {{-- @hasanyrole('super_admin|user') --}}
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="shield"></i><span
                         class="menu-title text-truncate" data-i18n="Roles &amp; Permission">Roles &amp;
                         Permission</span></a>
@@ -102,7 +102,7 @@
         class="menu-title text-truncate" data-i18n="Grievance">Grievance</span></a>
         <ul class="menu-content">
 
-    <li><a class="d-flex align-items-center" href="#"><i
+    <li><a class="d-flex align-items-center" href="{{ route('admin.newgrievance') }}"><i
                 data-feather="circle"></i><span class="menu-item text-truncate"
                 data-i18n="New Grievance">New Grievance</span></a>
     </li>
@@ -118,7 +118,7 @@
 </ul>
 </li>
 
-            @endhasanyrole
+            {{-- @endhasanyrole --}}
         </ul>
     </div>
 </div>

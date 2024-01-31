@@ -22,4 +22,9 @@ class GrievanceUser extends Authenticatable
         'year_semester',
         'course_complete_date'
     ];
+
+    public function getUserNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }
