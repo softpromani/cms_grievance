@@ -56,7 +56,7 @@ class FrontendController extends Controller
         />
       </div>
       <button type="submit" class="btn btn-primary w-30">OTP Verify</button>
-      <button type="submit" class="btn btn-danger w-30 ml-5">Resend OTP</button>
+      <a type="submit" href="javascript:void(0)"   data="'.$request->email.'" id="resend_otp"class="btn btn-danger w-30 ml-5">Resend OTP</a>
       ';
       return response()->json(['data'=>$html]);
     }
@@ -118,7 +118,7 @@ class FrontendController extends Controller
       ]);
       if($user_data){
         Session::flash('success','Registration Successfully');
-        return redirect()->back();
+        return redirect()->route('user-login.dashboard');
       }else{
         Session::flash('error','Registration Not Successfully');
         return redirect()->back();
