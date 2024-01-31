@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Mail\EmailVerifyMail;
 use App\Models\GrievanceUser;
+use App\Models\Tracking;
 use App\Models\RaiseGrievance;
 use App\Models\GrievanceSubject;
 use App\Models\UserType;
@@ -145,22 +146,24 @@ class FrontendController extends Controller
     ]);
      $count=RaiseGrievance::whereYear('created_at',Carbon::now()->format('Y'))->count()+1;
     $complain_number= Carbon::now()->format('Ym') .'0000'.$count;
-
-  
     $raise_data=RaiseGrievance::create([
       'subject_id'=>$request->subject,
       'title'=>$request->title,
       'user_id'=> Auth::guard('grievance')->user()->id,
       'grievance_code'=>$complain_number,
-      'message'=>$request->message,
-      'status_raise'=>'raise',
+      'status'=>'new_raise',
     ]);
     if($request->hasFile('raise_file')){
       $path='grievance';
       $media=uploadFile($raise_data,$path,$request->raise_file);
     }
-    
-    if(isset($media)){
+   $result= Auth::guard('grievance')->user()->track()->create([
+      'message'=>$request->message,
+      'from'=>'user',
+      'grievance_id'=>$raise_data->id,
+      'action'=>'raise_by_user',
+    ]);
+    if(isset($result)){
       Session::flash('sucess','Grievance Raise Sucessfully');
       return redirect()->back();
     }else{

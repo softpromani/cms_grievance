@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('raise_grievances', function (Blueprint $table) {
+        Schema::create('trackings', function (Blueprint $table) {
             $table->id();
-            $table->string('subject_id');
-            $table->string('title');
-            $table->string('user_id');
-            $table->string('grievance_code')->unique();
-            $table->string('status');
+            $table->string('message');
+            $table->string('from');            
+            $table->string('grievance_id');            
+            $table->morphs('creatable');            
+            $table->string('action');            
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('raise_grievances');
+        Schema::dropIfExists('trackings');
     }
 };
