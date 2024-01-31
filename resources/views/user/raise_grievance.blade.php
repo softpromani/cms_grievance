@@ -5,6 +5,7 @@
 @section('content')
     <!-- Browser States Card -->
     <section>
+        {{-- {{ Auth::guard('grievance')->user()->id}} --}}
         <div class="row">
             {{-- <div class="col-lg-4 col-md-6 col-12">
                 <div class="card card-browser-states">

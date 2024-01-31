@@ -27,4 +27,8 @@ class GrievanceUser extends Authenticatable
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+    
+    public function track(){
+        return $this->morphMany(Tracking::class,'creatable');
+    }
 }
