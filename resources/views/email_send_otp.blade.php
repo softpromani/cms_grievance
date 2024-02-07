@@ -1,4 +1,5 @@
 @extends('frontend.layout.main')
+@section('title', 'Email Verification')
 <style>
    
 </style>
@@ -20,6 +21,9 @@
                             <div class="input-group email">
                                 <input type="email" class="form-control " name="email" placeholder="Enter Email Address"
                                     aria-describedby="button-addon2" />
+                                    @error('email')
+                                    <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
                                 <button class="btn btn-outline-primary" id="submitBtn" type="submit">send OTP</button>
                             </div>
                         </form>

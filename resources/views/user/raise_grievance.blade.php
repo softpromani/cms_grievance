@@ -1,4 +1,5 @@
 @extends('frontend.layout.user_main')
+@section('title','Raise Grievance')
 <style>
 
 </style>
@@ -88,7 +89,7 @@
                         <h4 class="card-title">Raise Grievance</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form" action="{{ route('user-login.raisegrievance') }}" method="post"
+                        <form class="form" action="{{ route('user.raisegrievance') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -122,9 +123,9 @@
                                         <label class="form-label" for="last-name-column">Choose File</label>
                                         <input type="file" id="" class="form-control" placeholder=""
                                             name="raise_file" value="{{ old('raise_file') }}" />
-                                        {{-- @error('raise_file')
+                                        @error('raise_file')
                                             <span class="alert alert-danger">{{ $message }}</span>
-                                        @enderror --}}
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12 mt-2">

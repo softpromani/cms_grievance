@@ -24,15 +24,23 @@ Route::get('/', function () {
 Route::get('test', function () {
     return view('email_send_otp');
 });
+
 Route::prefix('user-login')->as('user-login.')->group(function () {
     Route::post('email-send-otp',[FrontendController::class,'email_verify'])->name('emailverify'); 
     Route::post('verify-otp',[FrontendController::class,'otp_verify'])->name('emailotpverify');
     Route::get('grievance-user-register',[FrontendController::class,'grievance_user_register'])->name('grievanceuser');
     Route::post('grievance-user-register',[FrontendController::class,'submit_user_grievance'])->name('postusergrievance');
+    
+});
+Route::prefix('user')->as('user.')->group(function(){
     Route::get('dashboard',[FrontendController::class,'dashboard'])->name('dashboard');
     Route::get('raise-grievance',[FrontendController::class,'grievance_raise'])->name('grievanceraise');
     Route::post('raise-grievance',[FrontendController::class,'raise_grievance'])->name('raisegrievance');
+    Route::get('pending-grievance',[FrontendController::class,'pending_grievance'])->name('grievancepending');
+    Route::get('grievance-detail/{id}',[FrontendController::class,'grievance_detail'])->name('grievancedetail');
+    Route::get('grievance-close',[FrontendController::class,'grievance_close'])->name('grievanceclose');
 });
+
 Route::post('/login',[AdminController::class,'AdminLogin'])->name('admin_login');
 Route::post('register',[AdminController::class,'Register'])->name('register');
 Route::get('get-register',[AdminController::class,'getRegister'])->name('registeration');

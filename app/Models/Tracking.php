@@ -12,4 +12,8 @@ class Tracking extends Model
     public function creatable(){
         return $this->morphTo();
     }
+
+    public function track(){
+        return $this->belongsTo(RaiseGrievance::class,'grievance_id','id');
+    }
 }

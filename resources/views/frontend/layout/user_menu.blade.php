@@ -54,18 +54,26 @@
         <div class="navbar-container main-menu-content" data-menu="menu-container">
             <!-- include ../../../includes/mixins-->
             <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="dropdown nav-item" data-menu="dropdown"><a
-                        class=" nav-link d-flex align-items-center bg-primary text-light" href="{{route('user-login.dashboard')}}"
+                <li class="dropdown nav-item" data-menu="dropdown"><a  href="{{route('user.dashboard')}}"
+                        class=" nav-link d-flex align-items-center"
+                        
+                        
                         data-bs-toggle="dropdown"><i data-feather="home"></i><span
                             data-i18n="Dashboards">Dashboards</span></a>
                 </li>
-                <li data-menu=""><a class="dropdown-item d-flex align-items-center" href="{{route('user-login.grievanceraise')}}" data-bs-toggle=""
+                <li data-menu=""><a class="dropdown-item d-flex align-items-center
+                     {{ Route::currentRouteName() == 'user.grievanceraise' ? 'bg-primary text-light' : '' }} " 
+                     href="{{route('user.grievanceraise')}}" data-bs-toggle=""
                         data-i18n="Second Level"><span data-i18n="Second Level">Raise Your Grievance </span></a>
                 </li>
-                <li data-menu=""><a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle=""
-                        data-i18n="Second Level"><span data-i18n="Second Level">Pending</span></a>
+                <li data-menu=""><a class="dropdown-item d-flex align-items-center
+                    {{ Route::currentRouteName() == 'user.grievancepending' ? 'bg-primary text-light' : '' }}"
+                     href="{{route('user.grievancepending')}}" data-bs-toggle=""
+                        data-i18n="Second Level"><span data-i18n="Second Level">Active</span></a>
                 </li>
-                <li data-menu=""><a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle=""
+                <li data-menu=""><a class="dropdown-item d-flex align-items-center
+                    {{ Route::currentRouteName() == 'user.grievanceclose' ? 'bg-primary text-light' : '' }}"
+                     href="{{route('user.grievanceclose')}}" data-bs-toggle=""
                         data-i18n="Second Level"><span data-i18n="Second Level">Close</span></a>
                 </li>
               
