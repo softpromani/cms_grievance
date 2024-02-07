@@ -5,11 +5,11 @@
 </style>
 @section('content')
 
-{{-- @foreach ($tracking_data as $complane) 
+    {{-- @foreach ($tracking_data as $complane) 
     
 {{ $complane}} 
 @endforeach --}}
-{{-- {{$tracking_data->track}} --}}
+    {{-- {{$tracking_data->track}} --}}
     <!-- Timeline Starts -->
     <section class="basic-timeline">
         <div class="row">
