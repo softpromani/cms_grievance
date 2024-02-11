@@ -1,4 +1,5 @@
 @extends('frontend.layout.user_main')
+@section('title', 'Dashboard')
 <style>
 
 </style>

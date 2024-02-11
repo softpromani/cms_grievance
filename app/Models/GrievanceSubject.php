@@ -14,4 +14,5 @@ class GrievanceSubject extends Model
         return $this->belongsToMany(User::class, 'assign_subjects');
     }
 
+    
 }

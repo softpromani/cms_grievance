@@ -6,6 +6,7 @@ use App\Events\DashboardNotiEvent;
 use Illuminate\Http\Request;
 use App\Models\EmailOtp;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +17,8 @@ use App\Models\Tracking;
 use App\Models\RaiseGrievance;
 use App\Models\GrievanceSubject;
 use App\Models\UserType;
+use  App\Http\Requests\UserGrievanceRequest;
+use  App\Http\Requests\RaiseGrievanceRequest;
 class FrontendController extends Controller
 {
     //
@@ -23,14 +26,19 @@ class FrontendController extends Controller
         return view('email_verify');
     }
     public function email_verify(Request $request){
-        // return $request->all();
+        
+      //   $validate=$request->validate([
+      //     'email' => 'required|email',
+      // ]);
         $otpNumber = rand(100000, 999999);
         $data=  EmailOtp::updateOrCreate(['Email_id'=>$request->email],[
             'email_id'=>$request->email,
             'otp'=>$otpNumber,
             'expiry_act'=>Carbon::now()->addMinutes(10),
         ]);
+       
         Mail::to($request->email)->send(new EmailVerifyMail($data));
+        
         $html=' 
         <div class="mb-2">
         <label for="nameApiKey" class="form-label">Enter OTP</label>
@@ -58,7 +66,7 @@ class FrontendController extends Controller
         />
       </div>
       <button type="submit" class="btn btn-primary w-30">OTP Verify</button>
-      <button type="submit" class="btn btn-danger w-30 ml-5">Resend OTP</button>
+      <a type="submit" href="javascript:void(0)"   data="'.$request->email.'" id="resend_otp"class="btn btn-danger w-30 ml-5">Resend OTP</a>
       ';
       return response()->json(['data'=>$html]);
     }
@@ -75,7 +83,7 @@ class FrontendController extends Controller
                 if(isset($grievance_user)){
                   if($grievance_user->email == $request->email){
                     Auth::guard('grievance')->loginUsingId($grievance_user->id);
-                    return redirect()->route('user-login.dashboard');
+                    return redirect()->route('user.dashboard');
                   }
                 }else{
                   return redirect()->route('user-login.grievanceuser');
@@ -94,17 +102,7 @@ class FrontendController extends Controller
       $user_type=UserType::get();
      return view('grievance_user_register',compact('user_type'));
     }
-    public function submit_user_grievance(Request $request){
-      $validate=$request->validate([
-        'unicode' => 'required|string|max:255',
-        'fname' => 'required',
-        'lname' => 'required',
-        'gender' => 'required',
-        'email' => 'required|email|unique:grievance_users,email',
-        'mobile' => 'required|min:10',
-        // 'password' => 'required|confirmed',
-        'course' => 'required',
-    ]);
+    public function submit_user_grievance(UserGrievanceRequest $request){
       $user_data=GrievanceUser::create([
         'user_type'=>$request->user_type,
         'unicode'=>$request->unicode,
@@ -120,7 +118,7 @@ class FrontendController extends Controller
       ]);
       if($user_data){
         Session::flash('success','Registration Successfully');
-        return redirect()->back();
+        return redirect()->route('user.dashboard');
       }else{
         Session::flash('error','Registration Not Successfully');
         return redirect()->back();
@@ -139,16 +137,10 @@ class FrontendController extends Controller
       $grievance_subject=GrievanceSubject::get();
       return view('user.raise_grievance',compact('grievance_subject'));
     } 
-    public function raise_grievance(Request $request){
-      $validate=$request->validate([
-        'subject' => 'required|string|max:255',
-        'title' => 'required',
-        'raise_file' => 'nullable',
-        'message' => 'required',
-    ]);
+    public function raise_grievance(RaiseGrievanceRequest $request){
      $count=RaiseGrievance::whereYear('created_at',Carbon::now()->format('Y'))->count()+1;
     $complain_number= Carbon::now()->format('Ym') .'0000'.$count;
-
+   
     $raise_data=RaiseGrievance::create([
       'subject_id'=>$request->subject,
       'title'=>$request->title,
@@ -164,13 +156,16 @@ class FrontendController extends Controller
       'grievance_id'=>$raise_data->id,
       'action'=>'raise_by_user',
     ]);
-
     if($request->hasFile('raise_file')){
       $path='grievance';
-      $file = $request->raise_file;
-      $media=uploadFile($result,$path,$file);
-    }
-  
+      $media=uploadFile($raise_data,$path,$request->raise_file);
+      Auth::guard('grievance')->user()->track()->create([
+      'message'=>$request->message,
+      'from'=>'user',
+      'grievance_id'=>$raise_data->id,
+      'action'=>'file_uploaded',
+    ]);
+  }
     if(isset($result)){
       Session::flash('sucess','Grievance Raise Sucessfully');
       return redirect()->back();
@@ -180,5 +175,23 @@ class FrontendController extends Controller
     }
     
     }
-   
+   // Pending Grievance 
+
+   public function pending_grievance(){
+    $complane_data = RaiseGrievance::where('user_id', Auth::guard('grievance')->user()->id)
+                                    ->where('status', '!=', 'close')
+                                    ->get();
+    return view('user.pending_grievance', compact('complane_data'));
+}
+
+
+   public function grievance_detail($id){
+    $tracking_data=Tracking::where('grievance_id',Crypt::decrypt($id))->get();
+    return view('user.tracking',compact('tracking_data'));
+   }
+
+   public function grievance_close(){
+    $close_data=RaiseGrievance::where('status','close')->get();
+    return view('user.close_grievance',compact('close_data'));
+   }
 }

@@ -1,4 +1,5 @@
 @extends('frontend.layout.user_main')
+@section('title','Raise Grievance')
 <style>
 
 </style>
@@ -82,19 +83,30 @@
                     </div>
                 </div>
             </div> --}}
-            <div class=" col-lg-12 col-md-6 col-12">
+            <div class=" col-lg-12 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Raise Grievance</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form" action="{{ route('user-login.raisegrievance') }}" method="post"
+                        <form class="form" action="{{ route('user.raisegrievance') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-md-12 col-12">
                                     <div class="mb-1">
-                                        <label class="form-label" for="basicSelect">Subject</label>
+                                        <label class="form-label" for="last-name-column">
+                                            Title<sup style="color:red;font-size:15px">*</sup></label>
+                                        <input type="text" id="last-name-column" class="form-control" placeholder="Title"
+                                            name="title" value="{{ old('title') }}" />
+                                        @error('title')
+                                            <span class="alert alert-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6 ">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="basicSelect">Subject<sup style="color:red;font-size:15px">*</sup></label>
                                         <select class="form-select" id="basicSelect" name="subject">
                                             <option value="">-- Grievance Subject --</option>
                                             @foreach ($grievance_subject as $subject)
@@ -108,23 +120,12 @@
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="mb-1">
-                                        <label class="form-label" for="last-name-column">
-                                            Title</label>
-                                        <input type="text" id="last-name-column" class="form-control" placeholder="Title"
-                                            name="title" value="{{ old('title') }}" />
-                                        @error('title')
-                                            <span class="alert alert-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="mb-1">
                                         <label class="form-label" for="last-name-column">Choose File</label>
                                         <input type="file" id="" class="form-control" placeholder=""
                                             name="raise_file" value="{{ old('raise_file') }}" />
-                                        {{-- @error('raise_file')
+                                        @error('raise_file')
                                             <span class="alert alert-danger">{{ $message }}</span>
-                                        @enderror --}}
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12 mt-2">
@@ -134,7 +135,7 @@
                                         @error('message')
                                             <span class="alert alert-danger">{{ $message }}</span>
                                         @enderror
-                                        <label for="textarea-counter">Message</label>
+                                        <label for="textarea-counter">Message<sup style="color:red;font-size:15px">*</sup></label>
                                     </div>
                                     <small class="textarea-counter-value float-end"><span class="char-count">0</span> /
                                         200
@@ -151,17 +152,8 @@
             </div>
         </div>
     </section>
-    <!-- Basic multiple Column Form section start -->
-    <section id="multiple-column-form">
-        <div class="row">
-
-        </div>
-    </section>
-    <!-- Basic Floating Label Form section end -->
-
-
-
     <!--/ Browser States Card -->
+   
 @endsection
 <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
     integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
