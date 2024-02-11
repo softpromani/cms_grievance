@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Events\DashboardNotiEvent;
 use Illuminate\Http\Request;
 use App\Models\EmailOtp;
 use Carbon\Carbon;
@@ -141,11 +143,12 @@ class FrontendController extends Controller
       $validate=$request->validate([
         'subject' => 'required|string|max:255',
         'title' => 'required',
-        // 'raise_file' => 'required',
+        'raise_file' => 'nullable',
         'message' => 'required',
     ]);
      $count=RaiseGrievance::whereYear('created_at',Carbon::now()->format('Y'))->count()+1;
     $complain_number= Carbon::now()->format('Ym') .'0000'.$count;
+
     $raise_data=RaiseGrievance::create([
       'subject_id'=>$request->subject,
       'title'=>$request->title,
@@ -153,16 +156,21 @@ class FrontendController extends Controller
       'grievance_code'=>$complain_number,
       'status'=>'new_raise',
     ]);
-    if($request->hasFile('raise_file')){
-      $path='grievance';
-      $media=uploadFile($raise_data,$path,$request->raise_file);
+    if($raise_data){
+      event(new DashboardNotiEvent($raise_data));
     }
-   $result= Auth::guard('grievance')->user()->track()->create([
+    $result= Auth::guard('grievance')->user()->track()->create([
       'message'=>$request->message,
-      'from'=>'user',
       'grievance_id'=>$raise_data->id,
       'action'=>'raise_by_user',
     ]);
+
+    if($request->hasFile('raise_file')){
+      $path='grievance';
+      $file = $request->raise_file;
+      $media=uploadFile($result,$path,$file);
+    }
+  
     if(isset($result)){
       Session::flash('sucess','Grievance Raise Sucessfully');
       return redirect()->back();

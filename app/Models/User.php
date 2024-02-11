@@ -44,8 +44,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function subject(){
-        return $this->hasOne(AssignSubject::class, 'user_id', 'id');
+   
+    public function subjects()
+    {
+        // Specify the custom pivot table name if it's not following Laravel's naming convention
+        return $this->belongsToMany(GrievanceSubject::class, 'assign_subjects');
+    }
+
+    public function syncSubjects(array $subjectIds)
+    {
+        // Use the sync method on the defined relationship
+        $this->subjects()->sync($subjectIds);
+    }
+
+    public function track(){
+        return $this->morphMany(Tracking::class,'creatable');
     }
 
 

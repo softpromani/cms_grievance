@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('title', 'Grievance::Dashboard')
 @section('content')
     <h3>Roles List</h3>
     <p class="mb-2">

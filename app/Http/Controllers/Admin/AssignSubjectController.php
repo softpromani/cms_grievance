@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssignSubject;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AssignSubjectController extends Controller
@@ -32,14 +33,9 @@ class AssignSubjectController extends Controller
         $validate = $request->validate([
             'user_id'=>'required',
             'subject_id'=>'required'
-        ]);  
-        $all_sub = AssignSubject::updateOrCreate( [
-            'user_id'=>$request->user_id,
-        ]
-            ,[
-            'user_id'=>$request->user_id,
-            'subject_id'=>json_encode($request->subject_id)
-        ]);
+        ]); 
+        $user=User::find($request->user_id);
+        $all_sub=  $user->syncSubjects($request->subject_id);
         if($all_sub){
             return redirect()->route('admin.user.store')->with('success','Subject Assign Successfully');
         }

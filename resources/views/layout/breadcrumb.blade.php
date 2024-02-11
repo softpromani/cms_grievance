@@ -2,21 +2,16 @@
     <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
             <div class="col-12">
-                <h2 class="content-header-title float-start mb-0">Layout Full</h2>
                 <div class="breadcrumb-wrapper">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#">Layouts</a>
-                        </li>
-                        <li class="breadcrumb-item active">Layout Full
-                        </li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">{{ $breadcrumb_title ?? '' }}</li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
-    <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+    {{-- <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
         <div class="mb-1 breadcrumb-right">
             <div class="dropdown">
                 <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button"
@@ -33,5 +28,5 @@
                             class="align-middle">Calendar</span></a></div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>

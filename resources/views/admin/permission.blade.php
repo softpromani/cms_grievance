@@ -1,5 +1,5 @@
-@extends('layout.main')
-@section('title', 'Permissions')
+@extends('layout.main', ['breadcrumb_title' => 'Permissions'])
+@section('title', 'Grievance::Permissions')
 
 @section('content')
     <!-- Basic Input -->

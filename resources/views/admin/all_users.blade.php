@@ -1,5 +1,5 @@
-@extends('layout.main')
-@section('title', 'user')
+@extends('layout.main', ['breadcrumb_title' => 'Users'])
+@section('title', 'Grievance::user')
 @section('content')
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/select/select2.min.css') }}">
@@ -87,7 +87,14 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->roles[0]->name??'' }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->subject->subject_id??'' }}</td>                       
+                                <td>
+                                    @if ($user->subjects)
+                                    {{ $user->subjects->pluck('name') }}
+                                    @else
+                                    <p>N/A</p>
+                                    @endif
+                                  
+                                </td>                      
                                 <td>
                                     <a class="btn btn-link p-0 editUser " style="display:inline" data-url="{{ isset($user)?asset($user->id):'#' }}"  data-user-id="{{ isset($user) ? $user->id : '' }}" ><button type="button" class="btn btn-sm btn-primary">Add</button></a>
                                 <td>{{ $user->created_at }}</td>
@@ -123,7 +130,7 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">'Assign Subject</h1>
+                    <h1 class="mb-1">Assign Subject</h1>
                 </div>
                 <form action="{{ route('admin.assign.store') }}"  method="POST"  class="row gy-1 pt-75">
                     @csrf

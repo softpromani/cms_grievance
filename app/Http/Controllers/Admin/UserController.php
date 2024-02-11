@@ -20,8 +20,7 @@ class UserController extends Controller
         $users = User::all();
         $Roles = Role::all();
         $subjets = GrievanceSubject::all();
-        $assign_subject = AssignSubject::all();
-        return view('admin.all_users',compact('users','Roles','subjets','assign_subject'));
+        return view('admin.all_users',compact('users','Roles','subjets'));
     }
 
     /**

@@ -22,4 +22,8 @@ class RaiseGrievance extends Model
     {
         return $this->belongsTo(GrievanceUser::class,'user_id');
     }
+    public function grievance()
+    {
+        return $this->hasOne(Tracking::class,'grievance_id');
+    }
 }

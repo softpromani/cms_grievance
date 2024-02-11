@@ -1,5 +1,5 @@
-@extends('layout.main')
-@section('title', 'Fetch Permissions')
+@extends('layout.main', ['breadcrumb_title' => 'Role Has Permission'])
+@section('title', 'Grievance::Permissions')
 
 @section('content')
     <div class="card">

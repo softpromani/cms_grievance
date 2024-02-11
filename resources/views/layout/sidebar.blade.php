@@ -40,7 +40,7 @@
                                 </g>
                             </g>
                         </svg></span>
-                    <h2 class="brand-text">Vuexy</h2>
+                    <h2 class="brand-text">Grievance Portal</h2>
                 </a>
             </li>
             <li class="nav-item nav-toggle">
@@ -99,20 +99,28 @@
     </li>
 
     <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-comments"></i><span
-        class="menu-title text-truncate" data-i18n="Grievance">Grievance</span></a>
+        class="menu-title text-truncate" data-i18n="Grievance">Grievance</span>
+    </a>
         <ul class="menu-content">
 
-    <li><a class="d-flex align-items-center" href="{{ route('admin.newgrievance') }}"><i
-                data-feather="circle"></i><span class="menu-item text-truncate"
-                data-i18n="New Grievance">New Grievance</span></a>
-    </li>
-    <li><a class="d-flex align-items-center" href="#"><i
+            <li>
+                <a class="d-flex align-items-center" href="{{ route('admin.newgrievance') }}">
+                    <i data-feather="circle"></i>
+                    <span class="menu-item text-truncate" data-i18n="New Grievance">New Grievance</span>
+                    {{-- <span class="badge rounded-pill bg-danger badge cart-item-count pl-2">{{ \App\Models\RaiseGrievance::where('status', 'new_raise')->count() }}</span> --}}
+                </a>
+            </li>
+            
+    <li><a class="d-flex align-items-center" href="{{ route('admin.pengrievance') }}"><i
         data-feather="circle"></i><span class="menu-item text-truncate"
-        data-i18n="Pending Grievance">Pending Grievance</span></a>
+        data-i18n="Pending Grievance">Active Grievance</span>
+        {{-- <span class="badge rounded-pill bg-danger badge cart-item-count pl-2">{{ \App\Models\Tracking::where('action', 'action_taken')->count() }}</span> --}}
+    </a>
 </li>
-<li><a class="d-flex align-items-center" href="#"><i
+<li><a class="d-flex align-items-center" href="{{ route('admin.closegrievance') }}"><i
     data-feather="circle"></i><span class="menu-item text-truncate"
-    data-i18n="Close Grievance">Close Grievance</span></a>
+    data-i18n="Close Grievance">Close Grievance</span>
+</a>
 </li>
     
 </ul>

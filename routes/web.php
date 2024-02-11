@@ -57,7 +57,10 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],function
     Route::resource('assign',AssignSubjectController::class);
     Route::post('assign-user',[AssignSubjectController::class,'assignUser'])->name('assignUser');
     Route::get('new-grievance',[GrievanceController::class,'newGrievance'])->name('newgrievance');
-    Route::post('action/{id}',[GrievanceController::class,'takeAction'])->name('takeaction');
+    Route::get('pending-grievance',[GrievanceController::class,'pendingGrievance'])->name('pengrievance');
+    Route::get('close-grievance',[GrievanceController::class,'closeGrievance'])->name('closegrievance');
+    Route::post('action',[GrievanceController::class,'takeAction'])->name('takeaction');
+    Route::post('mark-as-read',[GrievanceController::class,'markRead'])->name('markread');
 });
 
 

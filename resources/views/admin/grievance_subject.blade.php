@@ -1,5 +1,5 @@
-@extends('layout.main')
-@section('title', 'subject')
+@extends('layout.main', ['breadcrumb_title' => 'Grievance Subject'])
+@section('title', 'Grievance::Subject')
 @section('content')
  @can('role_create')
 <div class="row">
@@ -59,7 +59,6 @@
                             <th scope="col">Subject Name</th>
                             <th scope="col">Subject Image</th>
                             <th scope="col">Visible</th>
-                            <th scope="col">Created at</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -73,8 +72,6 @@
                                 <td><div class="form-check form-switch">
                                     <input class="form-check-input is_active" data-id="{{$sub->id}}" type="checkbox" role="switch" name="is_visible" id="flexSwitchCheckChecked" {{ $sub->is_visible ? 'checked' : '' }}>
                                   </div></td>
-
-                                <td>{{ $sub->created_at }}</td>
                                 <td>
                                     <div class="d-flex">
                                         <a href="{{ route('admin.subject.edit',$sub->id) }}" title="Edit"><i class="fa fa-edit me-1" style="color:blue; font-size:15px;"></i></a>

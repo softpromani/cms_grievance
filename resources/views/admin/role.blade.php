@@ -1,5 +1,5 @@
-@extends('layout.main')
-@section('title', 'role')
+@extends('layout.main', ['breadcrumb_title' => 'Role'])
+@section('title', 'Grievance::Role')
 @section('content')
  @can('role_create')
 <div class="row">
