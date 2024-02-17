@@ -31,4 +31,7 @@ class GrievanceUser extends Authenticatable
     public function track(){
         return $this->morphMany(Tracking::class,'creatable');
     }
+    public function user(){
+        return $this->belongsToMany(GrievanceUser::class, 'id');
+    }
 }

@@ -2,16 +2,10 @@
 @section('title', 'Grievance::Permissions')
 
 @section('content')
-    <!-- Basic Input -->
-    {{-- @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            {{ $message }}
-        </div>
-    @endif --}}
+   
 
-@can('role_create')
+@can('permission_create')
     
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -40,7 +34,7 @@
         </div>
     </div>
     @endcan
-    @can('role_read')
+    @canany(['permission_read', 'permission_edit', 'permission_delete'])
         
     <div class="row">
         <div class="col-lg-12">
@@ -53,18 +47,18 @@
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No.</th>
-                                <th scope="col">Name</th>
+                                <th scope="col">Permission Name</th>
                                 <th scope="col">Created At</th>
-                                <th scope="col">Action</th>
+                                {{-- <th scope="col">Action</th> --}}
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($permissions as $data)
                                 <tr>
                                     <th scope="row">{{ $loop->index + 1 }}</th>
-                                    <td>{{ $data->name }}</td>
-                                    <td>{{ $data->created_at }}</td>
-                                    <td>
+                                    <td>{{ str_replace('_', ' ', ucwords($data->name)) }}</td>
+                                    <td>{{ $data->created_at->format('F j, Y h:i A') }}</td>
+                                    <!-- <td>
                                         <div class="dropdown">
                                             <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
@@ -77,7 +71,7 @@
                                                 <li><a class="dropdown-item" href="#">Delete</a></li>
                                             </ul>
                                         </div>
-                                    </td>
+                                    </td> -->
                             @endforeach
                             </tr>
                         </tbody>
@@ -86,7 +80,7 @@
             </div>
         </div>
     </div>
-    @endcan
+    @endcanany
     <!-- Grids in modals -->
     @endsection
     @section('script')

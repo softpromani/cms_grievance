@@ -13,6 +13,13 @@ class GrievanceSubject extends Model
     {
         return $this->belongsToMany(User::class, 'assign_subjects');
     }
+    public function grievances()
+    {
+        return $this->hasMany(RaiseGrievance::class, 'subject_id');
+    }
+    public function media(){
+        return $this->morphOne(Media::class,'mediable');
+    }
 
     
 }

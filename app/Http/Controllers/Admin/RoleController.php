@@ -19,7 +19,7 @@ class RoleController extends Controller
             'role' => 'required',
         ]);
         Role::create([
-            'name' => $request->role,
+            'name' => str_replace(' ', '_', strtolower($request->role)),
             'guard_name'=>'web',
         ]);
         return redirect()->back()->with('success','Role has been created successfully.');

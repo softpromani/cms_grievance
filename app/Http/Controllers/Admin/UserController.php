@@ -8,6 +8,7 @@ use App\Models\GrievanceSubject;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -17,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(20);
         $Roles = Role::all();
         $subjets = GrievanceSubject::all();
         return view('admin.all_users',compact('users','Roles','subjets'));
@@ -41,7 +42,7 @@ class UserController extends Controller
             'email'=>'required',
             'password'=>'required'
         ]);
-        
+        dd($validate);
         $data = User::create([
             'name'=>$request->name,
             'email'=>$request->email,
@@ -69,10 +70,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $edit = User::find($id);
-        $users = User::all();
+        $edit = User::find(Crypt::decrypt($id));
+        $users = User::paginate(20);
         $Roles = Role::all();
-        return view('admin.all_users',compact('users','edit','Roles'));
+        $subjets = GrievanceSubject::all();
+        return view('admin.all_users',compact('users','edit','Roles','subjets'));
     }
 
     /**

@@ -51,10 +51,11 @@
 
         <!-- Content -->
         <div class="content">
-            <p>{{ $email_temp->title }}</p>
-            <h5>{{ $email_temp->grievance_code }}</h5>
-                <p>Hello Mr/Mis{{ $email_temp->grivuser->name }}</p>
-                <h4>Your Grievance {{ $email_temp->grievance->message }}</h4>
+            <p>Grievance Raise Title  {{ $email_temp->title }}</p>
+            <h5>Your Tracking Code  {{ $email_temp->grievance_code }}</h5>
+                <p>Hello Mr/Mis  {{ $email_temp->applicant->user_name }}</p>
+                <h4>Action Taken  {{ $email_temp->grievances->first()->message }}</h4>
+
            
         </div> 
 

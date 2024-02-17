@@ -1,11 +1,7 @@
 @extends('layout.main')
 @section('title', 'Grievance::Dashboard')
 @section('content')
-    <h3>Roles List</h3>
-    <p class="mb-2">
-        A role provided access to predefined menus and features so that depending <br />
-        on assigned role an administrator can have access to what he need
-    </p>
+  
 
     <!-- Role cards -->
     <div class="row">
@@ -13,7 +9,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <span>Total 4 users</span>
+                        <span> New Grievance</span>
                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                             <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                 title="Vinnie Mostowy" class="avatar avatar-sm pull-up">
@@ -37,14 +33,14 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
                         <div class="role-heading">
-                            <h4 class="fw-bolder">Administrator</h4>
-                            <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
+                            <h4 class="fw-bolder">Total {{ Auth()->user()->assignGrievances()->where('status','new_raise')->count()??'0' }}</h4>
+                            {{-- <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
                                 data-bs-target="#addRoleModal">
-                                <small class="fw-bolder">Edit Role</small>
-                            </a>
+                                <small class="fw-bolder">view</small>
+                            </a> --}}
                         </div>
-                        <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
-                                class="font-medium-5"></i></a>
+                        {{-- <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
+                                class="font-medium-5"></i></a> --}}
                     </div>
                 </div>
             </div>
@@ -53,7 +49,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <span>Total 7 users</span>
+                        <span>Open Grievance</span>
                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                             <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                 title="Jimmy Ressula" class="avatar avatar-sm pull-up">
@@ -79,14 +75,14 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
                         <div class="role-heading">
-                            <h4 class="fw-bolder">Manager</h4>
-                            <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
+                            <h4 class="fw-bolder">Total {{Auth()->user()->assignGrievances()->where('status','open')->count()??'0' }}</h4>
+                            {{-- <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
                                 data-bs-target="#addRoleModal">
                                 <small class="fw-bolder">Edit Role</small>
-                            </a>
+                            </a> --}}
                         </div>
-                        <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
-                                class="font-medium-5"></i></a>
+                        {{-- <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
+                                class="font-medium-5"></i></a> --}}
                     </div>
                 </div>
             </div>
@@ -95,7 +91,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <span>Total 5 users</span>
+                        <span>Close Grievance</span>
                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                             <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                 title="Andrew Tye" class="avatar avatar-sm pull-up">
@@ -126,14 +122,14 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
                         <div class="role-heading">
-                            <h4 class="fw-bolder">Users</h4>
-                            <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
+                            <h4 class="fw-bolder">Total {{ Auth()->user()->assignGrievances()->where('status','close')->count()??'0' }}</h4>
+                            {{-- <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
                                 data-bs-target="#addRoleModal">
                                 <small class="fw-bolder">Edit Role</small>
-                            </a>
+                            </a> --}}
                         </div>
-                        <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
-                                class="font-medium-5"></i></a>
+                        {{-- <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
+                                class="font-medium-5"></i></a> --}}
                     </div>
                 </div>
             </div>
@@ -142,7 +138,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <span>Total 3 users</span>
+                        <span> users</span>
                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                             <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                 title="Kim Karlos" class="avatar avatar-sm pull-up">
@@ -173,14 +169,14 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
                         <div class="role-heading">
-                            <h4 class="fw-bolder">Support</h4>
-                            <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
+                            <h4 class="fw-bolder">Total {{ App\Models\User::get()->count() }}</h4>
+                            {{-- <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
                                 data-bs-target="#addRoleModal">
                                 <small class="fw-bolder">Edit Role</small>
-                            </a>
+                            </a> --}}
                         </div>
-                        <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
-                                class="font-medium-5"></i></a>
+                        {{-- <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
+                                class="font-medium-5"></i></a> --}}
                     </div>
                 </div>
             </div>
@@ -189,7 +185,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <span>Total 2 users</span>
+                        <span>Grievance Users</span>
                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                             <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                 title="Kim Merchent" class="avatar avatar-sm pull-up">
@@ -220,19 +216,14 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
                         <div class="role-heading">
-                            <h4 class="fw-bolder">Restricted User</h4>
-                            <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
-                                data-bs-target="#addRoleModal">
-                                <small class="fw-bolder">Edit Role</small>
-                            </a>
+                            <h4 class="fw-bolder">Total {{ App\Models\GrievanceUser::get()->count() }}</h4>
+                           
                         </div>
-                        <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
-                                class="font-medium-5"></i></a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-6 col-md-6">
+        {{-- <div class="col-xl-4 col-lg-6 col-md-6">
             <div class="card">
                 <div class="row">
                     <div class="col-sm-5">
@@ -252,14 +243,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <!--/ Role cards -->
-
+{{-- 
     <h3 class="mt-50">Total users with their roles</h3>
-    <p class="mb-2">Find all of your company’s administrator accounts and their associate roles.</p>
+    <p class="mb-2">Find all of your company’s administrator accounts and their associate roles.</p> --}}
     <!-- table -->
-    <div class="card">
+    {{-- <div class="card">
         <div class="table-responsive">
             <table class="user-list-table table">
                 <thead class="table-light">
@@ -276,10 +267,10 @@
                 </thead>
             </table>
         </div>
-    </div>
+    </div> --}}
     <!-- table -->
     <!-- Add Role Modal -->
-    <div class="modal fade" id="addRoleModal" tabindex="-1" aria-hidden="true">
+    {{-- <div class="modal fade" id="addRoleModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-role">
             <div class="modal-content">
                 <div class="modal-header bg-transparent">
@@ -546,6 +537,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!--/ Add Role Modal -->
 @endsection

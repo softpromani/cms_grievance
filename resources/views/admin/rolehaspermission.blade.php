@@ -6,7 +6,7 @@
         <div class="card-header">
             Fetch Permission
         </div>
-        @can('role_create')
+        @can('permission_create')
         
         <div class="card-body">
             <form action="{{ route('admin.fetchPermission') }}" method="post">
@@ -28,12 +28,11 @@
                 </div>
             </form>
         </div>
-            
         @endcan
     </div>
 
     @if (isset($selectrole))
-    @can('role_read')
+    @canany(['permission_read', 'permission_edit', 'permission_delete'])
         
    
         <div class="card">
@@ -83,7 +82,7 @@
                 </form>
             </div>
         </div>
-        @endcan
+        @endcanany
     @endif
 
     @endsection

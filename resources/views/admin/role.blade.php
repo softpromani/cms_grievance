@@ -30,7 +30,7 @@
     </div>
 </div>
 @endcan
-@can('role_read')
+@canany(['role_read', 'role_edit', 'role_delete'])
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -51,8 +51,8 @@
                         @foreach ($roles as $data)
                             <tr>
                                 <th scope="row">{{ $loop->index + 1 }}</th>
-                                <td>{{ $data->name }}</td>
-                                <td>{{ $data->created_at }}</td>
+                                <td>{{ str_replace('_', ' ', ucwords($data->name))  }}</td>
+                                <td>{{ $data->created_at->format('F j, Y h:i A') }}</td>
                                 {{-- <td>
                                     <div class="d-flex">
                                         <a href="#" title="Edit"><i class="fa fa-edit me-1" style="color:blue; font-size:15px;"></i></a>
@@ -73,10 +73,8 @@
         </div>
     </div>
 </div>
-@endcan
-    
+@endcanany
 @endsection
-
 
 @section('script')
 @endsection

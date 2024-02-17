@@ -23,7 +23,7 @@ use App\Http\Controllers\FrontendController;
 
 Route::get('/', function () {
     return view('login');
-});
+})->name('login');
 Route::get('test', function () {
     return view('email_send_otp');
 });
@@ -44,7 +44,7 @@ Route::prefix('user')->as('user.')->group(function(){
     Route::get('grievance-close',[FrontendController::class,'grievance_close'])->name('grievanceclose');
 });
 
-Route::post('/login',[AdminController::class,'AdminLogin'])->name('admin_login');
+Route::post('admin-login',[AdminController::class,'AdminLogin'])->name('admin_login');
 Route::post('register',[AdminController::class,'Register'])->name('register');
 Route::get('get-register',[AdminController::class,'getRegister'])->name('registeration');
 
@@ -69,6 +69,8 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],function
     Route::get('close-grievance',[GrievanceController::class,'closeGrievance'])->name('closegrievance');
     Route::post('action',[GrievanceController::class,'takeAction'])->name('takeaction');
     Route::post('mark-as-read',[GrievanceController::class,'markRead'])->name('markread');
+    Route::get('view-grievcance/{id}',[GrievanceController::class,'viewGrievance'])->name('viewgrievance');
+    Route::post('grievance-query',[GrievanceController::class,'grievanceQuery'])->name('grievancequery');
 });
 
 

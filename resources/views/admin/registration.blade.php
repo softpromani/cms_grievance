@@ -135,7 +135,7 @@
                     </svg>
                     <span class="ms-2 fs-6">Twitter</span>
                   </a>
-                  {{-- <button class="btn btn-success"><a href="{{ route('admin_login') }}">Login</a> </button> --}}
+                  {{-- <button class="btn btn-success"><a href="#">Login</a> </button> --}}
                 </div>
               </div> -->
             </div>

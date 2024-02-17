@@ -1,7 +1,7 @@
 @extends('layout.main', ['breadcrumb_title' => 'Close Grievance'])
 @section('title', 'Grievance::Close')
 @section('content')
- {{-- @can('role_create') --}}
+@can('grievance_solution_read')
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -20,7 +20,11 @@
                                         <th scope="col">User Name</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">Subject</th>
+                                        <th scope="col">Suatus</th>
+                                        @can('grievance_solution_edit')
                                         <th scope="col">Message</th>
+                                        @endcan
+                                        
                                         <th scope="col">Created at</th>
                                     </tr>
                                 </thead>
@@ -29,10 +33,15 @@
                                     @forelse($closegrievance as $close)
                                         <tr>
                                             <th scope="row">{{ $loop->index + 1 }}</th>
-                                            <td>{{ $close->grivuser->user_name }}</td>
+                                            <td>{{ $close->applicant->user_name }}</td>
                                             <td>{{ $close->title }}</td>
                                             <td>{{ $close->subject->name }}</td>
-                                            <td>{{ $close->grievance->message??'' }}</td>
+                                            <td>{{ $close->status }}</td>
+                                            @can('grievance_solution_edit')
+                                            <td>
+                                                <a href="{{ route('admin.viewgrievance',encrypt($close->id)) }}" style="border: none; background: none; padding: 0; margin: 0; font-size:15px; color:blue;" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            </td>
+                                            @endcan
                                             <td>{{ $close->created_at }}</td>
                                             @empty
                                             <tr>
@@ -54,9 +63,7 @@
         </div>
     </div>
 </div>
-{{-- @endcan --}}
-
-    
+@endcan
 @endsection
 
 

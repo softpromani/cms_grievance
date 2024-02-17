@@ -16,6 +16,7 @@ class GrievanceSubjectController extends Controller
     public function index()
     {
         $subjects = GrievanceSubject::paginate(10);
+        
         return view('admin.grievance_subject',compact('subjects'));
     }
 
@@ -37,16 +38,22 @@ class GrievanceSubjectController extends Controller
             'icon_image'=>'nullable'
         ]);
         $pic_name = '';
-        if ($request->hasFile('icon_image')) {
-            $sub_img = 'subject-' . time() . '-' . rand(0, 99) . '.' . $request->icon_image->extension();
-            $request->icon_image->move(public_path('app-assets/images/subject/'), $sub_img);
-            $pic_name = 'app-assets/images/subject/'.$sub_img;
-        }
+        // if ($request->hasFile('icon_image')) {
+        //     $sub_img = 'subject-' . time() . '-' . rand(0, 99) . '.' . $request->icon_image->extension();
+        //     $request->icon_image->move(public_path('app-assets/images/subject/'), $sub_img);
+        //     $pic_name = 'app-assets/images/subject/'.$sub_img;
+        // }
+
         $subject = GrievanceSubject::create([
             'name'=>$request->name,
             'is_visible'=>'1',
             'icon_image'=>$pic_name,
         ]);
+        if($request->icon_image){
+            $path='grievance';
+            $file = $request->icon_image;
+            $media=uploadFile($subject,$path,$file);
+          }
         if ($subject) 
             {
                 return back()->with('success', 'Subject Add successfully');
@@ -70,7 +77,7 @@ class GrievanceSubjectController extends Controller
     public function edit(string $id)
     {
         $subjects = GrievanceSubject::paginate(10);
-        $edit = GrievanceSubject::find($id);
+        $edit = GrievanceSubject::find(Crypt::decrypt($id));
         return view('admin.grievance_subject',compact('edit','subjects'));
     }
 
@@ -87,18 +94,25 @@ class GrievanceSubjectController extends Controller
         $exists_image = $data->icon_image;
         $pic_name = '';
         
-        if ($request->hasFile('icon_image')) {
-            $sub_img = 'subject-'.time().'-'.rand(0, 99).'.'.$request->icon_image->extension();
-            $request->icon_image->move(public_path('app-assets/images/subject/'),$sub_img);
-            $pic_name = 'app-assets/images/subject/'.$sub_img;
-            if ($exists_image) {
-                File::delete(public_path($exists_image));
-            }
-        }
+        // if ($request->hasFile('icon_image')) {
+        //     $sub_img = 'subject-'.time().'-'.rand(0, 99).'.'.$request->icon_image->extension();
+        //     $request->icon_image->move(public_path('app-assets/images/subject/'),$sub_img);
+        //     $pic_name = 'app-assets/images/subject/'.$sub_img;
+        //     if ($exists_image) {
+        //         File::delete(public_path($exists_image));
+        //     }
+        // }
         $subject = $data->update([
             'name'=>$request->name,
             'icon_image'=>$pic_name
         ]);
+
+        if($request->icon_image){
+            $path='grievance';
+            $file = $request->icon_image;
+            $media=uploadFile($data,$path,$file);
+          }
+
         if ($subject) 
             {
                 return redirect()->route('admin.subject.index')->with('success', 'Subject Update successfully');

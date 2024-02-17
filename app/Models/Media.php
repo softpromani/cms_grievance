@@ -12,4 +12,8 @@ class Media extends Model
     public function mediable(){
         return $this->morphTo();
     }
+    // public function getFileAttribute()
+    // {
+    //     return asset('storage/' . $this->file_path );
+    // }
 }

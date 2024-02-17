@@ -18,10 +18,8 @@ class Tracking extends Model
     }
 
     public function media(){
-        return $this->morphMany(Media::class,'mediable');
+        return $this->morphOne(Media::class,'mediable');
     }
-   
-
     public function track(){
         return $this->belongsTo(RaiseGrievance::class,'grievance_id','id');
     }

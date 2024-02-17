@@ -20,32 +20,44 @@
                         @endisset
                         <div class="row gy-4">
                             <div class="col-xxl-3 col-md-6">
-                                <label for="name" class="form-label">User Name</label>
+                                <label for="name" class="form-label">User Name<sup style="color:red;font-size:15px">*</sup></label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" value="{{ isset($edit)?$edit->name:'' }}" id="name" name="name" placeholder=" Name">
+                                    <input type="text" class="form-control" value="{{ isset($edit)?$edit->name:'' }}" id="name" name="name" placeholder=" Name" required>
                                 </div>
+                                @error('name')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                                 <div class="col-xxl-3 col-md-6">
-                                    <label for="password" class="form-label">Password</label>
+                                    <label for="password" class="form-label">Password<sup style="color:red;font-size:15px">*</sup></label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" id="password" name="password" placeholder=" ......" @isset($edit) disabled @endisset>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder=" ......" @isset($edit) disabled @endisset required>
                                     </div>
+                                    @error('password')
+                                    <span class="alert alert-danger">{{ $message }}</span>
+                                @enderror
                                 </div>
                             <div class="col-xxl-3 col-md-6">
-                                <label for="role" class="form-label">Select Role </label>
-                                <select class="form-select" aria-label="Default select example" name="role">
+                                <label for="role" class="form-label">Select Role<sup style="color:red;font-size:15px">*</sup> </label>
+                                <select class="form-select" aria-label="Default select example" name="role" required>
                                     
                                     <option selected disabled>Open this select menu</option>
                                     @foreach ($Roles as $role)
                                         <option value="{{ $role->name }}" @if(isset($edit)?$role->name:'') selected @endif>{{ $role->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('role')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                            @enderror
                             </div>
                             <div class="col-xxl-3 col-md-6">
-                                <label for="uemail" class="form-label">User Email</label>
+                                <label for="uemail" class="form-label">User Email<sup style="color:red;font-size:15px">*</sup></label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" value="{{ isset($edit)?$edit->email:'' }}" id="uemail" name="email" placeholder="example@gmail.com">
+                                    <input type="text" class="form-control" value="{{ isset($edit)?$edit->email:'' }}" id="uemail" name="email" placeholder="example@gmail.com" required>
                                 </div>
+                                @error('email')
+                                <span class="alert alert-danger">{{ $message }}</span>
+                            @enderror
                             </div>
                             <div class=" col-md-6">
                                 <button class="btn btn-primary" type="submit">{{ isset($edit)?'Update':'Submit' }}</button>
@@ -59,7 +71,7 @@
     </div>
 </div>
 
-@can('role_read')
+{{-- @can('role_read') --}}
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -76,7 +88,6 @@
                             <th scope="col">Email</th>
                             <th scope="col">Subjects</th>
                             <th scope="col">Assign Subject</th>
-                            <th scope="col">Created at</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -89,7 +100,10 @@
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     @if ($user->subjects)
-                                    {{ $user->subjects->pluck('name') }}
+                                    {{-- {{ $user->subjects->pluck('name') }} --}}
+                                    {{ implode(', ' , $user->subjects->pluck('name')->map(function($name) {
+                                        return ucwords($name == "" ? "blank" : $name);
+                                    })->toArray()) }}
                                     @else
                                     <p>N/A</p>
                                     @endif
@@ -97,10 +111,9 @@
                                 </td>                      
                                 <td>
                                     <a class="btn btn-link p-0 editUser " style="display:inline" data-url="{{ isset($user)?asset($user->id):'#' }}"  data-user-id="{{ isset($user) ? $user->id : '' }}" ><button type="button" class="btn btn-sm btn-primary">Add</button></a>
-                                <td>{{ $user->created_at }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ route('admin.user.edit',$user->id) }}" title="Edit"><i class="fa fa-edit me-1" style="color:blue; font-size:15px;"></i></a>
+                                        <a href="{{ route('admin.user.edit',encrypt($user->id)) }}" title="Edit"><i class="fa fa-edit me-1" style="color:blue; font-size:15px;"></i></a>
                                         <form action="{{ route('admin.user.destroy',$user->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
@@ -115,11 +128,17 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="card-footer">
+                    @if (isset($users))
+                    {!! $users->links('pagination::bootstrap-5') !!}
+                    @endif
+       
+                </div>
             </div>
         </div>
     </div>
 </div>
-@endcan
+{{-- @endcan --}}
     
 
 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
@@ -140,7 +159,7 @@
                         <select class=" form-select" id="multiselect" name="subject_id[]" multiple>
                             <option readonly disabled>Select Multiple Subject</option>
                             @foreach ($subjets as $sb )
-                            <option value="{{ $sb->id}}">{{ $sb->name }}</option>
+                            <option value="{{ $sb->id}}" >{{ $sb->name }}</option>
                             @endforeach
                            
                         </select>

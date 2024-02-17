@@ -14,7 +14,7 @@ class AssignSubject extends Model
     {
         return $this->belongsTo(User::class);
     }
-    // public function subject(){
-    //     return $this->hasOne(GrievanceSubject::class,'subject_id');
-    // }
+    public function subject(){
+        return $this->belongsTo(GrievanceSubject::class,'subject_id');
+    }
 }

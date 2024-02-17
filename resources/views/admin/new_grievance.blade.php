@@ -1,7 +1,7 @@
 @extends('layout.main', ['breadcrumb_title' => 'New Grievance'])
 @section('title', 'Grievance::new')
 @section('content')
- {{-- @can('role_create') --}}
+ @can('grievance_solution_read')
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -21,7 +21,9 @@
                                         <th scope="col">Title</th>
                                         <th scope="col">Subject</th>
                                         <th scope="col">Created at</th>
+                                        @can('grievance_solution_edit')
                                         <th scope="col">Action</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -29,13 +31,15 @@
                                     @forelse ($grievances as $gvns)
                                         <tr>
                                             <th scope="row">{{ $loop->index + 1 }}</th>
-                                            <td>{{ $gvns->grivuser->user_name }}</td>
+                                            <td>{{ $gvns->applicant->user_name }}</td>
                                             <td>{{ $gvns->title }}</td>
                                             <td>{{ $gvns->subject->name }}</td>
                                             <td>{{ $gvns->created_at }}</td>
+                                            @can('grievance_solution_edit')
                                             <td>
-                                                <a class="btn btn-link p-0 editUser " style="display:inline" data-url="{{ isset($gvns)?asset($gvns->id):'#' }}"  data-user-id="{{ isset($gvns) ? $gvns->id : '' }}" ><button type="button" class="btn btn-sm btn-primary">Take Action</button></a></td>        
-                                            
+                                                <a class="btn btn-link p-0 editUser " style="display:inline" data-url="{{ isset($gvns)?asset($gvns->id):'#' }}"  data-user-id="{{ isset($gvns) ? $gvns->id : '' }}" ><button type="button" class="btn btn-sm btn-primary">Take Action</button></a>
+                                            </td>  
+                                            @endcan
                                             @empty
                                             <tr>
                                                 <td colspan="6" class="text-center">
@@ -59,7 +63,7 @@
         </div>
     </div>
 </div>
-{{-- @endcan --}}
+@endcan
 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
         <div class="modal-content">
@@ -74,10 +78,13 @@
                     @csrf
                     <input type="text" id="userIdInput" name="grievance_id" value="" hidden>
                     <div class="col-md-6 mb-1">
-                            <label for="message" class="form-label">Message</label>
+                            <label for="message" class="form-label">Message<sup style="color:red;font-size:15px">*</sup></label>
                             <div class="input-group">
-                                <textarea class="form-control" name="message" id="message" ></textarea>
+                                <textarea class="form-control " name="message" id="message"></textarea>
                             </div>
+                            @error('message')
+                            <span class="alert alert-danger">{{ $message }}</span>
+                            @enderror
                     </div>
                     <div class="col-md-6 mb-1">
                         <label for="file" class="form-label">File Upload</label>
@@ -113,8 +120,6 @@ $(document).ready(function() {
         $('#userIdInput').val(grievance_id);
     });
 });
-
-
-
 </script>
+
 @endsection

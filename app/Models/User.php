@@ -47,13 +47,11 @@ class User extends Authenticatable
    
     public function subjects()
     {
-        // Specify the custom pivot table name if it's not following Laravel's naming convention
         return $this->belongsToMany(GrievanceSubject::class, 'assign_subjects');
     }
 
     public function syncSubjects(array $subjectIds)
     {
-        // Use the sync method on the defined relationship
         $this->subjects()->sync($subjectIds);
     }
 
@@ -61,5 +59,12 @@ class User extends Authenticatable
         return $this->morphMany(Tracking::class,'creatable');
     }
 
+    public function getUserNameAttribute()
+    {
+        return $this->name;
+    }
+    public function assignGrievances(){
+        return $this->hasManyThrough(RaiseGrievance::class,AssignSubject::class,'user_id','subject_id','id','grievance_subject_id');
+    }
 
 }

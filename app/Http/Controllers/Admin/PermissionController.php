@@ -35,7 +35,8 @@ class PermissionController extends Controller
         $request->validate([
             'permission' => 'required',
         ]);
-        $perm = PermissionName::create(['name'=>$request->permission]);
+        $perm = PermissionName::create(['name'=>str_replace(' ', '_', strtolower($request->permission))]);
+       
         if(isset($perm))
         {
             $permission = Permission::create(['name' => $request->permission, 'perm_id' => $perm->id]);

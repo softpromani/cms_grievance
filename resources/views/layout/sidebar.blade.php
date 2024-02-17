@@ -55,37 +55,43 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            {{-- @can('dashboard') --}}
             <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }} nav-item">
                 <a class="d-flex align-items-center" href="{{ route('admin.dashboard') }}">
                     <i data-feather="home"></i>
                     <span class="menu-title text-truncate" data-i18n="Home">Dashboard</span>
                 </a>
-            </li>
-            {{-- @hasanyrole('super_admin|user') --}}
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="shield"></i><span
-                        class="menu-title text-truncate" data-i18n="Roles &amp; Permission">Roles &amp;
-                        Permission</span></a>
-                <ul class="menu-content">
-
-                    <li><a class="d-flex align-items-center" href="{{ route('admin.role') }}"><i
+            </li> 
+            {{-- @endcan --}}
+                        <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="shield"></i><span
+                            class="menu-title text-truncate" data-i18n="Roles &amp; Permission">Roles &amp;
+                            Permission</span></a>
+                          <ul class="menu-content">
+                            @can('role')
+                            <li><a class="d-flex align-items-center" href="{{ route('admin.role') }}"><i
                                 data-feather="circle"></i><span class="menu-item text-truncate"
                                 data-i18n="Roles">Roles</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="{{ route('admin.permission.index') }}"><i
+                            </li>
+                            @endcan
+                            @can('permission')
+                            <li><a class="d-flex align-items-center" href="{{ route('admin.permission.index') }}"><i
+                                        data-feather="circle"></i><span class="menu-item text-truncate"
+                                        data-i18n="Permission">Permission</span></a>
+                            </li>
+                            <li><a class="d-flex align-items-center" href="{{ route('admin.rolePermission') }}"><i
                                 data-feather="circle"></i><span class="menu-item text-truncate"
-                                data-i18n="Permission">Permission</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="{{ route('admin.rolePermission') }}"><i
-                        data-feather="circle"></i><span class="menu-item text-truncate"
-                        data-i18n="RoleHas/Permission">RoleHas/Permission</span></a>
-            </li>
-                </ul>
-            </li>
-            <li><a class="d-flex align-items-center" href="{{ route('admin.subject.index') }}">
-                <i class="fa fa-book" aria-hidden="true"></i><span class="menu-item text-truncate"
-                data-i18n="Add Subject">Add Subject</span></a>
-            </li>
-
+                                data-i18n="RoleHas/Permission">RoleHas/Permission</span></a>
+                            </li>
+                        @endcan
+                            </ul>
+                        </li>
+           
+                        @can('subject')
+                        <li><a class="d-flex align-items-center" href="{{ route('admin.subject.index') }}">
+                            <i class="fa fa-book" aria-hidden="true"></i><span class="menu-item text-truncate"
+                            data-i18n="Add Subject">Add Subject</span></a>
+                        </li>
+                        @endcan
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span
                 class="menu-title text-truncate" data-i18n="Users">Users</span></a>
                 <ul class="menu-content">
@@ -97,7 +103,8 @@
             
         </ul>
     </li>
-
+    @can('grievance_solution')
+        
     <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-comments"></i><span
         class="menu-title text-truncate" data-i18n="Grievance">Grievance</span>
     </a>
@@ -111,22 +118,22 @@
                 </a>
             </li>
             
-    <li><a class="d-flex align-items-center" href="{{ route('admin.pengrievance') }}"><i
-        data-feather="circle"></i><span class="menu-item text-truncate"
-        data-i18n="Pending Grievance">Active Grievance</span>
-        {{-- <span class="badge rounded-pill bg-danger badge cart-item-count pl-2">{{ \App\Models\Tracking::where('action', 'action_taken')->count() }}</span> --}}
-    </a>
-</li>
-<li><a class="d-flex align-items-center" href="{{ route('admin.closegrievance') }}"><i
-    data-feather="circle"></i><span class="menu-item text-truncate"
-    data-i18n="Close Grievance">Close Grievance</span>
-</a>
-</li>
-    
-</ul>
-</li>
-
-            {{-- @endhasanyrole --}}
+                <li><a class="d-flex align-items-center" href="{{ route('admin.pengrievance') }}"><i
+                    data-feather="circle"></i><span class="menu-item text-truncate"
+                    data-i18n="Pending Grievance">Active Grievance</span>
+                    {{-- <span class="badge rounded-pill bg-danger badge cart-item-count pl-2">{{ \App\Models\Tracking::where('action', 'action_taken')->count() }}</span> --}}
+                </a>
+            </li>
+            <li><a class="d-flex align-items-center" href="{{ route('admin.closegrievance') }}"><i
+                data-feather="circle"></i><span class="menu-item text-truncate"
+                data-i18n="Close Grievance">Close Grievance</span>
+            </a>
+            </li>
+                
+            </ul>
+            </li>
+@endcan
+            
         </ul>
     </div>
 </div>
